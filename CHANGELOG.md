@@ -1,7 +1,7 @@
 ﻿# PRAXIS MANTIS v3.6  
 **Policy Planning Engine — Cost-Aware, Budget-Governed**
 
-**Author:** Samuel Lawson  
+**Author:** Sam Flynn  
 **Division:** Dark Science Division  
 **Associated Engine:** PRAXIS TITAN P6.x  
 **System Class:** Governed Analytic Planner  
