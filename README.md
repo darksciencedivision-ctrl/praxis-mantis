@@ -2,12 +2,16 @@
 
 Policy Planning Engine — Cost-Aware, Budget-Governed
 
-Author: Sam Flynn
+Author: Samuel Lawson
 Division: Dark Science Division
 Associated Engine: PRAXIS TITAN P6.x
 System Class: Governed Analytic Planner
 Execution Mode: Offline, deterministic, file-driven
 Autonomy Level: Decision support only (no execution, no mutation)
+
+## What this repository is
+
+This repository documents the architecture, governance model, and planning methodology of PRAXIS MANTIS. The implementation core (`praxis_core/mantis`) is **not** distributed here — it is commercial software, available under separate license. See [Praxis-engine](https://github.com/darksciencedivision-ctrl/Praxis-engine) for the runner interface and contact information.
 
 ## 1. System Overview
 
@@ -98,10 +102,9 @@ ISC Events (Internal System Cost)
 
 **Budget Controller Output (Authoritative)**
 
+```json
 { "ok": true, "ceiling": 120.0, "spent": 105.2, "remaining": 14.888, "units": "isc_events" }
-
-pgsql
-Copy code
+```
 
 If a policy exceeds remaining budget, it is unselectable.
 
@@ -134,24 +137,23 @@ FULL_RECAL is intentionally excluded when unaffordable.
 
 ## 9. Planning Logic (High-Level)
 
+```text
 Load baseline
-↓
+    ↓
 Extract p_top and goal
-↓
+    ↓
 Query budget controller
-↓
+    ↓
 Filter policies by affordability
-↓
+    ↓
 Rank by mode-specific heuristic
-↓
+    ↓
 Select best viable policy (or sequence)
-↓
+    ↓
 Write plan to disk
-↓
+    ↓
 (Optional) Chronos commit
-
-markdown
-Copy code
+```
 
 System state is never mutated.
 
@@ -193,24 +195,22 @@ No silent success is permitted.
 
 ## 13. Engineering Blueprint
 
-**Core Modules**
+**Core Modules** (private implementation; not distributed in this repository)
 
+```text
 praxis_core/
 └── mantis/
-├── runtime.py # Orchestrator / CLI
-├── policy_engine.py # Policy catalog + ranking
-├── budget_controller.py # ISC accounting
-├── schemas.py # Optional validation
-
-css
-Copy code
+    ├── runtime.py            # Orchestrator / CLI
+    ├── policy_engine.py      # Policy catalog + ranking
+    ├── budget_controller.py  # ISC accounting
+    └── schemas.py            # Optional validation
+```
 
 **Data Flow**
 
+```text
 TITAN → baseline_summary.json → MANTIS runtime → policy_engine → budget_controller → mantis_plan.json
-
-markdown
-Copy code
+```
 
 ## 14. Code DNA (Design Philosophy)
 
@@ -242,6 +242,8 @@ MANTIS meets safety-grade analytic system standards.
 
 ## 16. Current Status (v3.6)
 
+Status of the private implementation core as of v3.6 (verified internally; the code is not distributed in this repository):
+
 * Runtime stable
 * Budget enforcement verified
 * Policy fallback functioning
@@ -257,5 +259,3 @@ MANTIS meets safety-grade analytic system standards.
 * Chronos audit re-enablement
 
 **PRAXIS MANTIS is a planner, not an actor. Cost authority is absolute. Failure is explicit. Silence is forbidden.**
-Source: PRAXIS MANTIS README.md from GitHub repository darksciencedivision-ctrl/praxis-mantis. 
-github.com
