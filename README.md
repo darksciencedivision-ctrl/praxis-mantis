@@ -1,3 +1,5 @@
+> **Status:** PRAXIS family module (policy planning; TITAN P6.x-associated). Current public PRAXIS architecture: [praxis-titan](https://github.com/darksciencedivision-ctrl/praxis-titan).
+
 # PRAXIS MANTIS v3.6
 
 Policy Planning Engine — Cost-Aware, Budget-Governed
